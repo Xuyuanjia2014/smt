@@ -2,11 +2,11 @@ from z3 import *
 
 x1 = 6
 y1 = 10
-res1 = 4
+res1 = 100
 
 x2 = 8
 y2 = 9
-res2 = 1
+res2 = 123
 
 m = Int('m')
 n = Int('n')
@@ -18,8 +18,8 @@ operators = Array("operators", IntSort(), IntSort())
 operators2 = Array("operators2", IntSort(), IntSort())
 s = Solver()
 s.add(locations[0] == 1)
-s.add(locations[1] == 25)
-s.add(locations[2] == 87)
+s.add(locations[1] == 3)
+s.add(locations[2] == 7)
 
 s.add(operators[0] == x1)
 s.add(operators[1] == y1)
@@ -59,12 +59,13 @@ for a in [3,6,9]:
 
     if a == 9:
         s.add(And(operators[a + 2] == operators[a] - operators[a + 1],
-                  locations[a + 2] == locations[a] + locations[a + 1]))
+                  locations[a + 2] == locations[a] - locations[a + 1]))
 
         s.add(And(operators2[a + 2] == operators2[a] - operators2[a + 1],
-                  locations[a + 2] == locations[a] + locations[a + 1]))
+                  locations[a + 2] == locations[a] - locations[a + 1]))
     else:
-        s.add(And(operators[a+2] == operators[a+1]+operators[a], locations[a+2] == locations[a+1] + locations[a]))
+        s.add(And(operators[a+2] == operators[a+1]+operators[a],
+                  locations[a+2] == locations[a+1] + locations[a]))
         s.add(And(operators2[a + 2] == operators2[a + 1] + operators2[a],
                   locations[a + 2] == locations[a + 1] + locations[a]))
 
